@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -54,16 +55,17 @@ public class ListRoomFragment extends Fragment {
 
             JSONArray jsonArray = new JSONArray(strJSON);
 
-            String[] idStrings = new String[jsonArray.length()];
-            String[] namestrings = new String[jsonArray.length()];
-            String[] priceStrings = new String[jsonArray.length()];
-            String[] phoneStrings = new String[jsonArray.length()];
-            String[] imageStrings = new String[jsonArray.length()];
-            String[] optionStrings = new String[jsonArray.length()];
-            String[] latStrings = new String[jsonArray.length()];
-            String[] lngStrings = new String[jsonArray.length()];
-            String[] roomStrings = new String[jsonArray.length()];
+            final String[] idStrings = new String[jsonArray.length()];
+            final String[] namestrings = new String[jsonArray.length()];
+            final String[] priceStrings = new String[jsonArray.length()];
+            final String[] phoneStrings = new String[jsonArray.length()];
+            final String[] imageStrings = new String[jsonArray.length()];
+            final String[] optionStrings = new String[jsonArray.length()];
+            final String[] latStrings = new String[jsonArray.length()];
+            final String[] lngStrings = new String[jsonArray.length()];
+            final String[] roomStrings = new String[jsonArray.length()];
             String[] firsImageStrings = new String[jsonArray.length()];
+            final String[] resultStrings = new String[colummRoomTable.length];
 
 
             for (int i = 0; i < jsonArray.length(); i += 1) {
@@ -88,6 +90,29 @@ public class ListRoomFragment extends Fragment {
                     firsImageStrings, namestrings, priceStrings);
             listView.setAdapter(roomListViewAdapter);
 
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    resultStrings[0] = idStrings[i];
+                    resultStrings[1] = namestrings[i];
+                    resultStrings[2] = priceStrings[i];
+                    resultStrings[3] = phoneStrings[i];
+                    resultStrings[4] = imageStrings[i];
+                    resultStrings[5] = optionStrings[i];
+                    resultStrings[6] = latStrings[i];
+                    resultStrings[7] = lngStrings[i];
+                    resultStrings[8] = roomStrings[i];
+
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contentListRoom, DetailFragment.detailInstance(resultStrings))
+                            .addToBackStack(null)
+                            .commit();
+
+                }   //On item click
+            });
+
 
         } catch (Exception e) {
             Log.d(tag, "e creatListView ==>" + e.toString());
@@ -101,7 +126,7 @@ public class ListRoomFragment extends Fragment {
         String tag = "26AugV2";
         int allDigi = strArrayList.length();
         Log.d(tag, "allDigi ==>" + allDigi);
-        strResult = strArrayList.substring(1, (allDigi-1));
+        strResult = strArrayList.substring(1, (allDigi - 1));
         Log.d(tag, "strResult1 ==>" + strResult);
         String[] strings = strResult.split(",");
         Log.d(tag, "string[0]==>" + strings[0]);
