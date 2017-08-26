@@ -10,6 +10,9 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,12 +37,18 @@ public class FirstActivity extends FragmentActivity implements OnMapReadyCallbac
     private MyConstant myConstant;
     private String[] nameStrings, priceStrings, phoneStrings, imageStrings, optionStrings,
             latStrings, lngStrings, roomStrings, idStrings;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+
+        //Initial view
+        initialView();
 
         //Setup Constant
         setupConstant();
@@ -54,6 +63,13 @@ public class FirstActivity extends FragmentActivity implements OnMapReadyCallbac
         addController();
 
     }   //Main Method
+
+    private void initialView() {
+        drawerLayout = findViewById(R.id.drawerFirst);
+        toolbar = findViewById(R.id.toolBarFirst);
+
+
+    }  //Initial View
 
     private void addController() {
         ImageView imageView = (ImageView) findViewById(R.id.imvadd);
